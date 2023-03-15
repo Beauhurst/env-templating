@@ -1,0 +1,24 @@
+[project]
+name = "env_templating"
+version = "0.0.1"
+authors = [
+    { name="Beauhurst Dev", email="dev@beauhurst.com" },
+]
+description = "Tool for using Secrets Manger to substitute variables into `.env` template files"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "boto3",
+    "fab-classic",
+]
+
+[project.urls]
+"Repository" = "https://github.com/Beauhurst/env-templating"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
