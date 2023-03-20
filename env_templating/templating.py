@@ -32,13 +32,10 @@ def write_env_file_with_substitutions(output_file_path, env_template: Template, 
         new_env_fp.write(env_template.substitute(substitutions))
 
 
-def get_user_confirmation(existing_file: Path, new_file: Path):
+def get_user_confirmation(existing_file: Path, new_file: Path) -> bool:
     with settings(warn_only=True):
         local(f"diff -N {existing_file} {new_file}")
-    if not confirm("Are you happy to overwrite the env file with these changes?"):
-        local(f"rm {new_file}")
-        return False
-    return True
+    return confirm("Are you happy to overwrite the env file with these changes?")
 
 
 def update_environment_variables(
@@ -50,7 +47,7 @@ def update_environment_variables(
     prioritise_extra_subs: bool = False,
     output_file_path: Path | str | None = None,
     with_confirm: bool = True,
-):
+) -> None:
     """Generate a .env file by merging an env template file with secrets stored in Secrets Manager"""
 
     session = boto3.Session(profile_name=aws_profile_name, region_name=secrets_manager_region)
@@ -72,6 +69,7 @@ def update_environment_variables(
     write_env_file_with_substitutions(temp_output_file_path, template, substitutions)
 
     if with_confirm and not get_user_confirmation(output_file_path, temp_output_file_path):
+        local(f"rm {temp_output_file_path}")
         abort("No changes were made to the existing environment file")
     local(f"rm -f {output_file_path}")
     local(f"mv {temp_output_file_path} {output_file_path}")
