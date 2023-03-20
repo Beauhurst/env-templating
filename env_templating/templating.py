@@ -12,16 +12,19 @@ __all__ = ["update_environment_variables"]
 
 
 def _read_env_template(input_template_path: Path | str) -> Template:
+    """Open a text file and convert it to a Template object"""
     with open(input_template_path) as input_template_file:
         return Template(input_template_file.read())
 
 
-def _write_env_file_with_substitutions(output_file_path, env_template: Template, substitutions: dict):
+def _write_env_file_with_substitutions(output_file_path: Path, env_template: Template, substitutions: dict):
+    """Make substitutions into a Template object and write resulting string to file"""
     with open(output_file_path, "w") as new_env_fp:
         new_env_fp.write(env_template.substitute(substitutions))
 
 
 def _get_user_confirmation(existing_file: Path, new_file: Path) -> bool:
+    """Present a diff comparing the old file to the new and prompt user for confirmation"""
     with settings(warn_only=True):
         local(f"diff -N {existing_file} {new_file}")
     return confirm("Are you happy to overwrite the env file with these changes?")
