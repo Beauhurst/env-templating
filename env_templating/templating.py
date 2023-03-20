@@ -1,7 +1,6 @@
 from pathlib import Path
 from string import Template
 
-import boto3
 from fabric.api import local, settings
 from fabric.contrib.console import confirm
 from fabric.utils import abort
@@ -40,8 +39,7 @@ def update_environment_variables(
 ) -> None:
     """Generate a .env file by merging an env template file with secrets stored in Secrets Manager"""
 
-    session = boto3.Session(profile_name=aws_profile_name, region_name=secrets_manager_region)
-    secret = get_aws_secret(session, secrets_manager_secret)
+    secret = get_aws_secret(secrets_manager_secret, aws_profile_name, secrets_manager_region)
 
     template = _read_env_template(template_file_path)
 
