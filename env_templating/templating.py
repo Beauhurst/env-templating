@@ -35,8 +35,8 @@ def update_environment_variables(
     secrets_manager_secret: str,
     secrets_manager_region: str,
     aws_profile_name: str = "default",
-    extra_subs: dict | None = None,
-    prioritise_extra_subs: bool = False,
+    extra_substitutions: dict | None = None,
+    prioritise_extra_substitutions: bool = False,
     output_file_path: Path | str | None = None,
     with_confirm: bool = True,
 ) -> None:
@@ -46,11 +46,11 @@ def update_environment_variables(
 
     template = _read_env_template(template_file_path)
 
-    if not extra_subs and prioritise_extra_subs:
-        raise ValueError("`extra_subs` must be set if using `prioritise_extra_subs`")
+    if not extra_substitutions and prioritise_extra_substitutions:
+        raise ValueError("`extra_substitutions` must be set if using `prioritise_extra_substitutions`")
 
     # The dict union operator will prioritise any duplicate keys in the RHS dict
-    substitutions = (secret | extra_subs) if prioritise_extra_subs else (extra_subs | secret)
+    substitutions = (secret | extra_substitutions) if prioritise_extra_substitutions else (extra_substitutions | secret)
 
     if output_file_path is None:
         # put in the same folder as the original env template if output is unspecified

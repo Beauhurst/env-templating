@@ -57,8 +57,8 @@ Supported arguments:
 * `secrets_manager_secret: str` (required) - The name of the secret you have stored in AWS Secrets Manager
 * `secrets_manager_region: str` (required) - The name of the AWS region the secret is stored in (e.g. `eu-west-2`)
 * `aws_profile_name: str = "default"` - The name of the AWS profile you have set up locally
-* `extra_subs: dict | None = None` - A dictionary of key/value pairs to substitute into your template in addition to those in your secret
-* `prioritise_extra_subs: bool = False` - Whether extra substitutions take priority over those in the secret where there are duplicate keys 
+* `extra_substitutions: dict | None = None` - A dictionary of key/value pairs to substitute into your template in addition to those in your secret
+* `prioritise_extra_substitutions: bool = False` - Whether extra substitutions take priority over those in the secret where there are duplicate keys 
 * `output_file_path: Path | str | None = None` - Where to output the final env file (if not set this library will put this in the same folder as your template file)
 * `with_confirm: bool = True` - Whether to show a diff and get confirmation from the user before replacing the existing file
 
