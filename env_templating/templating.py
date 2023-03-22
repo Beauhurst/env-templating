@@ -46,6 +46,9 @@ def update_environment_variables(
 
     template = _read_env_template(template_file_path)
 
+    if not extra_subs and prioritise_extra_subs:
+        raise ValueError("`extra_subs` must be set if using `prioritise_extra_subs`")
+
     # The dict union operator will prioritise any duplicate keys in the RHS dict
     substitutions = (secret | extra_subs) if prioritise_extra_subs else (extra_subs | secret)
 
