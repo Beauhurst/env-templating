@@ -10,9 +10,9 @@ Tool for using Secrets Manger to substitute variables into `.env` template files
 
 Run the following:
 ```shell
-pip install git+ssh://git@github.com/Beauhurst/env-templating.git@main
+pip install git+https://github.com/Beauhurst/env-templating.git@main
 ```
-Or add `git+ssh://git@github.com/Beauhurst/env-templating.git@main` to your `requirements.txt` file.
+Or add `git+https://github.com/Beauhurst/env-templating.git@main` to your `requirements.txt` file.
 
 (If you want a specific release, replace `main` with the appropriate tag)
 
