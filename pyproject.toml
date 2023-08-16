@@ -1,6 +1,6 @@
 [project]
 name = "env-templating"
-version = "0.0.2.dev"
+version = "0.0.2"
 authors = [
     { name="Beauhurst Dev", email="dev@beauhurst.com" },
 ]
