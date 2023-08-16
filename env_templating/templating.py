@@ -42,12 +42,14 @@ def update_environment_variables(
 ) -> None:
     """Generate a .env file by merging an env template file with secrets stored in Secrets Manager"""
 
+    if not extra_substitutions:
+        if prioritise_extra_substitutions:
+            raise ValueError("`extra_substitutions` must be set if using `prioritise_extra_substitutions`")
+        extra_substitutions = {}
+
     secret = get_aws_secret(secrets_manager_secret, aws_profile_name, secrets_manager_region)
 
     template = _read_env_template(template_file_path)
-
-    if not extra_substitutions and prioritise_extra_substitutions:
-        raise ValueError("`extra_substitutions` must be set if using `prioritise_extra_substitutions`")
 
     # The dict union operator will prioritise any duplicate keys in the RHS dict
     substitutions = (secret | extra_substitutions) if prioritise_extra_substitutions else (extra_substitutions | secret)
