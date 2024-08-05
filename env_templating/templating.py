@@ -34,7 +34,6 @@ def update_environment_variables(
     template_file_path: Path | str,
     secrets_manager_secret: str,
     secrets_manager_region: str,
-    aws_profile_name: str = "default",
     extra_substitutions: dict | None = None,
     prioritise_extra_substitutions: bool = False,
     output_file_path: Path | str | None = None,
@@ -47,7 +46,7 @@ def update_environment_variables(
             raise ValueError("`extra_substitutions` must be set if using `prioritise_extra_substitutions`")
         extra_substitutions = {}
 
-    secret = get_aws_secret(secrets_manager_secret, aws_profile_name, secrets_manager_region)
+    secret = get_aws_secret(secrets_manager_secret, secrets_manager_region)
 
     template = _read_env_template(template_file_path)
 
