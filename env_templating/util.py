@@ -1,3 +1,11 @@
+from functools import partial
+
+from invoke import run as invoke_run
+
+
+run = partial(invoke_run, echo=True)
+
+
 def confirm(message: str, default: bool = True) -> bool:
     """Prompt the user for a confirmation response"""
     while True:
