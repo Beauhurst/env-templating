@@ -25,7 +25,7 @@ def _write_env_file_with_substitutions(output_file_path: Path, env_template: Tem
 
 def _get_user_confirmation(existing_file: Path, new_file: Path) -> bool:
     """Present a diff comparing the old file to the new and prompt user for confirmation"""
-    run(f"diff -N {existing_file} {new_file}")
+    run(f"diff -N {existing_file} {new_file}", echo=True)
     return confirm("Are you happy to overwrite the env file with these changes?")
 
 
@@ -66,5 +66,5 @@ def update_environment_variables(
         run(f"rm {temp_output_file_path}")
         print("No changes were made to the existing environment file")
         sys.exit()
-    run(f"rm -f {output_file_path}")
-    run(f"mv {temp_output_file_path} {output_file_path}")
+    run(f"rm -f {output_file_path}", echo=True)
+    run(f"mv {temp_output_file_path} {output_file_path}", echo=True)
