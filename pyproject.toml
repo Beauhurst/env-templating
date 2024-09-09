@@ -16,6 +16,11 @@ dependencies = [
     "invoke",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
 [project.urls]
 "Repository" = "https://github.com/Beauhurst/env-templating"
 
