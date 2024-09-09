@@ -13,7 +13,12 @@ classifiers = [
 ]
 dependencies = [
     "boto3",
-    "fab-classic",
+    "invoke",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
 ]
 
 [project.urls]

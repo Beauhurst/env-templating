@@ -1,11 +1,9 @@
+import sys
 from pathlib import Path
 from string import Template
 
-from fabric.api import local, settings
-from fabric.contrib.console import confirm
-from fabric.utils import abort
-
 from .aws import get_aws_secret
+from .util import confirm, run
 
 
 __all__ = ["update_environment_variables"]
@@ -25,8 +23,7 @@ def _write_env_file_with_substitutions(output_file_path: Path, env_template: Tem
 
 def _get_user_confirmation(existing_file: Path, new_file: Path) -> bool:
     """Present a diff comparing the old file to the new and prompt user for confirmation"""
-    with settings(warn_only=True):
-        local(f"diff -N {existing_file} {new_file}")
+    run(f"diff -N {existing_file} {new_file}")
     return confirm("Are you happy to overwrite the env file with these changes?")
 
 
@@ -64,7 +61,8 @@ def update_environment_variables(
     _write_env_file_with_substitutions(temp_output_file_path, template, substitutions)
 
     if with_confirm and not _get_user_confirmation(output_file_path, temp_output_file_path):
-        local(f"rm {temp_output_file_path}")
-        abort("No changes were made to the existing environment file")
-    local(f"rm -f {output_file_path}")
-    local(f"mv {temp_output_file_path} {output_file_path}")
+        run(f"rm {temp_output_file_path}")
+        print("No changes were made to the existing environment file")
+        sys.exit()
+    run(f"rm -f {output_file_path}")
+    run(f"mv {temp_output_file_path} {output_file_path}")
