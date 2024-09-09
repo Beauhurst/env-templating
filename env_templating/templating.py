@@ -23,7 +23,7 @@ def _write_env_file_with_substitutions(output_file_path: Path, env_template: Tem
 
 def _get_user_confirmation(existing_file: Path, new_file: Path) -> bool:
     """Present a diff comparing the old file to the new and prompt user for confirmation"""
-    run(f"diff -N {existing_file} {new_file}")
+    run(f"diff -N {existing_file} {new_file}", warn=True)
     return confirm("Are you happy to overwrite the env file with these changes?")
 
 
