@@ -63,6 +63,6 @@ def update_environment_variables(
     if with_confirm and not _get_user_confirmation(output_file_path, temp_output_file_path):
         run(f"rm {temp_output_file_path}")
         print("No changes were made to the existing environment file")
-        sys.exit()
+        return
     run(f"rm -f {output_file_path}")
     run(f"mv {temp_output_file_path} {output_file_path}")
